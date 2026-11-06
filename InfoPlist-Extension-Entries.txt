@@ -1,0 +1,9 @@
+Add these entries to the Packet Tunnel extension target's Info.plist:
+
+NSExtension = {
+    NSExtensionPointIdentifier = "com.apple.networkextension.packet-tunnel";
+    NSExtensionPrincipalClass = "$(PRODUCT_MODULE_NAME).PacketTunnelProvider";
+};
+
+The extension must be embedded in the signed host app and use a unique bundle ID,
+for example: com.example.AflatoonMubdi.PacketTunnel

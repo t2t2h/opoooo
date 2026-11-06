@@ -1,0 +1,19 @@
+Add this URL type to the signed companion HOST APP Info.plist (not the tweak dylib):
+
+CFBundleURLTypes = (
+  {
+    CFBundleURLName = "com.aflatoonmubdi.vpn";
+    CFBundleURLSchemes = ( "aflatoonvpn" );
+  }
+);
+
+In AppDelegate, forward incoming URLs:
+
+func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+    return WireGuardCompanionURLHandler.shared.handle(url)
+}
+
+Before the menu's Connect button can work, the companion app must save a valid profile:
+try WireGuardProfileVault.save(profileText)
+
+Add WireGuardProfileVault.swift and WireGuardCompanionURLHandler.swift to the signed host app target. The host app must embed a separately signed Packet Tunnel extension with the Network Extension entitlement and WireGuardKit. The injected dylib opens the companion app URL; it does not own or start the tunnel process itself.
